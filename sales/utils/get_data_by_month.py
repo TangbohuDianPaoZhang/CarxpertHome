@@ -1,7 +1,6 @@
 from sales.models import *
 
-def getCarsByMonth():
-    # cars = CarInfo.objects.filter(month=month).values()
+def get_cars_by_month():
+    # cars = CarInfo.objects.filter(month='202306').values()
     cars = CarInfo.objects.all()
-    print(cars)
     return cars
