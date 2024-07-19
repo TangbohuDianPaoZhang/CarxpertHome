@@ -10,10 +10,9 @@ class CarInfo(models.Model):
     minPrice = models.DecimalField('最低价', max_digits=10, decimal_places=2)
     maxPrice = models.DecimalField('最高价', max_digits=10, decimal_places=2)
     rank = models.IntegerField('排名')
-    # energyType = models.CharField('能源类型', max_length=50)
+    energyType = models.CharField('能源类型', max_length=50)
     carType = models.CharField('车辆类型', max_length=50)
     month = models.CharField('月份', max_length=50)
-    # createTime = models.DateTimeField('创建时间', auto_now_add=True)
 
     class Meta:
         db_table = 'car_info'
