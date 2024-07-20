@@ -1,8 +1,7 @@
 from .get_data_by_month import *
 
 
-def get_center_data():
-    cars = list(get_cars_by_month())
+def get_center_data(cars: list):
     # 车型
     car_type = ['微型车', '紧凑型车', '中型车', '中大型车', '大型车',
                 '小型SUV', '紧凑型SUV', '中型SUV', '中大型SUV' ,'大型SUV',
@@ -49,8 +48,7 @@ def get_center_data():
             max_brand_sales += i.sales
     return most_popular_car, most_popular_car_sales, max_car_type, max_car_type_count, max_brand, max_brand_sales
 
-def get_roll_list():
-    cars = list(get_cars_by_month())
+def get_roll_list(cars: list):
     car_brand_sales_list = {}
     for i in cars:
         car_brand = str(i.brand)
@@ -67,8 +65,7 @@ def get_roll_list():
         })
     return roll_list
 
-def get_energe_type_rate():
-    cars = list(get_cars_by_month())
+def get_energe_type_rate(cars: list):
     energy_type_count_list = {}
     for i in cars:
         energy_type = str(i.energyType)

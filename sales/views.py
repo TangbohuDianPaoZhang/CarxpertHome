@@ -9,11 +9,13 @@ def index(request):
 
 def center(request):
     if request.method == 'GET':
-        month = request.GET.get('month', '')
-        most_popular_car, most_popular_car_sales, max_car_type,max_car_type_count, max_brand, max_brand_count = get_center_data.get_center_data()
-        roll_list = get_center_data.get_roll_list()
+        # month = request.GET.get('month', '')
+        car_list = get_center_data.get_cars_by_month()
+        most_popular_car, most_popular_car_sales, max_car_type,max_car_type_count, max_brand, max_brand_count =(
+            get_center_data.get_center_data(car_list))
+        roll_list = get_center_data.get_roll_list(car_list)
         wordcloud_generate.generate_img()
-        oil_rate, electric_rate, hybrid_rate = get_center_data.get_energe_type_rate()
+        oil_rate, electric_rate, hybrid_rate = get_center_data.get_energe_type_rate(car_list)
         return JsonResponse({
             'most_popular_car': most_popular_car,
             'most_popular_car_sales': most_popular_car_sales,
