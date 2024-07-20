@@ -1,6 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from .utils import get_center_data
 from .utils import wordcloud_generate
+from .utils import get_center_left_data
 
 # Create your views here.
 
@@ -27,4 +28,11 @@ def center(request):
             'oil_rate': oil_rate,
             'electric_rate': electric_rate,
             'hybrid_rate': hybrid_rate
+        })
+
+def center_left(request):
+    if request.method == 'GET':
+        pie_data = get_center_left_data.get_pie_type_data()
+        return JsonResponse({
+            'pie_data': pie_data
         })

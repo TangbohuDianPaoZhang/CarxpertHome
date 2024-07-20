@@ -8,7 +8,7 @@
           <div class="d-flex jc-center">
             <dv-decoration-8 class="dv-dec-8" :color="decorationColor" />
             <div class="title">
-              <span class="title-text">大数据可视化平台</span>
+              <span class="title-text" style="font-size: 35px; font-weight: bold">懂车之家排行榜</span>
               <dv-decoration-6
                 class="dv-dec-6"
                 :reverse="true"
@@ -37,7 +37,7 @@
           </div>
           <div class="d-flex aside-width">
             <div class="react-right bg-color-blue mr-3">
-              <span class="text fw-b">vue-big-screen</span>
+              <span class="text fw-b">懂车之家有限公司</span>
             </div>
             <div class="react-right mr-4 react-l-s">
               <span class="react-after"></span>
