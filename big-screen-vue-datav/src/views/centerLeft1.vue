@@ -6,29 +6,12 @@
           <icon name="chart-bar" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">车型销量占比</span>
+          <span class="fs-xl text mx-2" style="font-size: 20px">车型销量占比</span>
           <dv-decoration-3 class="dv-dec-3" />
         </div>
       </div>
       <div class="d-flex jc-center">
         <CenterLeft1Chart />
-      </div>
-      <!-- 4个主要的数据 -->
-      <div class="bottom-data">
-        <div
-          class="item-box mt-2"
-          v-for="(item, index) in numberData"
-          :key="index"
-        >
-          <div class="d-flex">
-            <span class="coin">￥</span>
-            <dv-digital-flop class="dv-digital-flop" :config="item.number" />
-          </div>
-          <p class="text" style="text-align: center;">
-            {{ item.text }}
-            <span class="colorYellow">(件)</span>
-          </p>
-        </div>
       </div>
     </div>
   </div>

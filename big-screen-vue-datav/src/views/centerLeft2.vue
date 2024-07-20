@@ -6,22 +6,21 @@
           <icon name="chart-pie" class="text-icon"></icon>
         </span>
         <div class="d-flex">
-          <span class="fs-xl text mx-2">地图数据</span>
+          <span class="fs-xl text mx-2"></span>
           <dv-decoration-1 class="dv-dec-1" />
         </div>
       </div>
       <div class="d-flex jc-center">
-        <CenterLeft2Chart />
+        <img src="../../../wordcloud-img/car_wordcloud.png" alt="词云图" style="height: 200px; width: 300px; margin-top: 50px">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import CenterLeft2Chart from "@/components/echart/centerLeft/centerLeft2Chart";
 export default {
   components: {
-    CenterLeft2Chart
+
   },
 };
 </script>

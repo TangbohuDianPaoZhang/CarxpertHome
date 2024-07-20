@@ -8,6 +8,7 @@
 export default {
   data () {
     return {
+      currentIndex: 0,
       cdata: {
         xData: ["data1", "data2", "data3", "data4", "data5", "data6"],
         seriesData: [
@@ -27,10 +28,10 @@ export default {
   async mounted () {
     const res = await this.$http.get('/sales/center_left/')
     this.$set(this.cdata, 'seriesData', res.data.pie_data)
-    console.log(this.cdata.seriesData)
   },
   updated() {
     this.initChart()
+    this.loopAnimation()
   },
   methods: {
     initChart () {
@@ -59,23 +60,48 @@ export default {
           icon: "circle",
           bottom: 0,
           x: "center",
-          data: this.cdata.xData,
+          data: this.cdata.seriesData.map(item => item.name),
           textStyle: {
             color: "#fff"
           }
         },
         series: [
           {
-            name: "通过率统计",
+            name: "车型占比",
             type: "pie",
-            radius: [10, 50],
+            radius: [20, 70],
             roseType: "area",
             center: ["50%", "40%"],
-            data: this.cdata.seriesData
+            data: this.cdata.seriesData,
+            emphasis: {
+              itemStyle: {
+                shadowBlur:10,
+                shadowOffsetX:0,
+                lable:{
+                  show: true
+                }
+              }
+            }
           }
         ]
       };
       this.myChart.setOption(options)
+    },
+    loopAnimation() {
+      setInterval(() => {
+        this.myChart.dispatchAction({
+          type: 'downplay',
+          seriesIndex: 0,
+          dataIndex: this.currentIndex
+        });
+        this.currentIndex = (this.currentIndex + 1) % this.cdata.seriesData.length;
+
+        this.myChart.dispatchAction({
+          type: 'highlight',
+          seriesIndex: 0,
+          dataIndex: this.currentIndex
+        })
+      }, 2000)
     }
   }
 }
