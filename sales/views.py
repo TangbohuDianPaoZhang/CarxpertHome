@@ -5,6 +5,11 @@ from .utils import get_data_by_month
 from .utils import get_center_data
 from .utils import wordcloud_generate
 from .utils import get_center_left_data
+from .utils import get_center_data, oil_elec_comparison, car_rank
+from .utils import wordcloud_generate
+from .utils import get_center_left_data
+from .utils import get_center_right2
+from .utils import oil_elec_comparison
 
 # Create your views here.
 
@@ -45,4 +50,34 @@ def center_left(request):
         pie_data = get_center_left_data.get_pie_type_data(month)
         return JsonResponse({
             'pie_data': pie_data
+        })
+
+def center_right2(request):
+    if request.method == "GET":
+        get_center_right2.getPriceSortData()
+        realData = get_center_right2.getPriceSortData()
+        # print(realData)
+        return JsonResponse({
+            'realData':realData
+        })
+
+def centerRightChange(request,energyType):
+    if request.method == "GET":
+        oilData,electricData = oil_elec_comparison.get_oil_elec_data()
+        realData = []
+        if energyType == 1:
+            realData = oilData
+        else:
+            realData = electricData
+        return JsonResponse({
+            'realData':realData
+        })
+
+
+def bottomRight(request):
+    if request.method == "GET":
+        # car_rank.getRankData()
+        carData = car_rank.getRankData()
+        return JsonResponse({
+            'carData':carData
         })
