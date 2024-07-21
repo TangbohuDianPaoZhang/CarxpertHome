@@ -7,10 +7,12 @@
         </span>
         <div class="d-flex">
           <span class="fs-xl text mx-2">任务完成排行榜</span>
+          <a v-on:click="oilClick" href="#"><span style="color: #257dff">油车</span></a>
+          <a v-on:click="electricClick" href="#"><span style="color: #33cea0">电车</span></a>
         </div>
       </div>
       <div class="d-flex jc-center body-box">
-        <dv-scroll-board class="dv-scr-board" :config="config" />
+        <dv-scroll-board class="dv-scr-board" :config="config" v-bind:key="config.data[0][1]"/>
       </div>
     </div>
   </div>
@@ -21,9 +23,9 @@ export default {
   data() {
     return {
       config: {
-        header: ['组件', '分支', '覆盖率'],
+        header: ['车名', '销量/台', '能源'],
         data: [
-          ['组件1', 'dev-1', "<span  class='colorGrass'>↑75%</span>"],
+          ['组件1', 1, "<span  class='colorGrass'>↑75%</span>"],
           ['组件2', 'dev-2', "<span  class='colorRed'>↓33%</span>"],
           ['组件3', 'dev-3', "<span  class='colorGrass'>↑100%</span>"],
           ['组件4', 'rea-1', "<span  class='colorGrass'>↑94%</span>"],
@@ -44,6 +46,20 @@ export default {
         align: ['center']
       }
     }
+  },
+  methods:{
+    async electricClick(){
+      const res = await this.$http.get('sales/centerRightChange/0')
+      this.$set(this.config,'data',res.data.realData)
+    },
+    async oilClick(){
+      const res = await this.$http.get('sales/centerRightChange/1')
+      this.$set(this.config,'data',res.data.realData)
+    }
+  },
+  async mounted(){
+    const res = await this.$http.get('sales/centerRightChange/1')
+    this.$set(this.config,'data',res.data.realData)
   }
 }
 </script>
