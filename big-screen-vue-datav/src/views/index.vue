@@ -29,10 +29,20 @@
           <div class="d-flex aside-width">
             <div class="react-left ml-4 react-l-s">
               <span class="react-left"></span>
-              <span class="text">数据分析1</span>
+              <span class="text">汽车销量风云榜</span>
             </div>
             <div class="react-left ml-3">
-              <span class="text">数据分析2</span>
+              <div class="month-select">
+                <select v-model="selectedYearMonth" @change="updateMonth(selectedYearMonth)">
+                  <option
+                    v-for="item in yearMonthOption"
+                    :key="item"
+                    :value="item"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
           <div class="d-flex aside-width">
@@ -101,11 +111,29 @@ import centerRight2 from './centerRight2'
 import center from './center'
 import bottomLeft from './bottomLeft'
 import bottomRight from './bottomRight'
+import {EventBus} from "@/eventBus";
 
 export default {
   mixins: [ drawMixin ],
   data() {
+    const currentYear = new Date().getFullYear()
+    const years = [2024]
+
+    const months = []
+    for (let i = 6; i >= 1; i--) {
+      months.push(i < 10 ? `0${i}` : i)
+    }
+
+    const yearMonthOption = []
+    years.forEach(year => {
+      months.forEach(month => {
+        yearMonthOption.push(`${year}${month}`)
+      })
+    })
     return {
+      yearMonthOption,
+      // selectedYearMonth: `${currentYear}${new Date().getMonth() + 1 < 10 ? '0' : ''}${new Date().getMonth() + 1}`,
+      selectedYearMonth: `${currentYear}${new Date().getMonth() < 10 ? '0' : ''}${new Date().getMonth()}`,
       timing: null,
       loading: true,
       dateDay: null,
@@ -143,6 +171,10 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 500)
+    },
+    updateMonth(value) {
+      console.log(value)
+      EventBus.$emit('monthChanged', value)
     }
   }
 }

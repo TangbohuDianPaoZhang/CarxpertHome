@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {EventBus} from "@/eventBus";
 export default {
   data () {
     return {
@@ -26,14 +27,27 @@ export default {
 
   },
   async mounted () {
-    const res = await this.$http.get('/sales/center_left/')
-    this.$set(this.cdata, 'seriesData', res.data.pie_data)
+    EventBus.$on('monthChanged', this.fetchMonthData)
+    await this.fetchMonthData(this.$parent.selectedYearMonth);
+    // const res = await this.$http.get('/sales/center_left/')
+    // this.$set(this.cdata, 'seriesData', res.data.pie_data)
+  },
+  beforeDestroy() {
+    EventBus.$off('monthChanged', this.fetchMonthData);
   },
   updated() {
     this.initChart()
     this.loopAnimation()
   },
   methods: {
+    async fetchMonthData(month) {
+      try {
+        const res = await this.$http.post('/sales/center_left/', { month });
+        this.$set(this.cdata, 'seriesData', res.data.pie_data)
+      } catch (e) {
+        console.error('error fetching month data: ', e)
+      }
+    },
     initChart () {
       this.myChart = this.$echarts.init(this.$refs.chart)
       const options = {

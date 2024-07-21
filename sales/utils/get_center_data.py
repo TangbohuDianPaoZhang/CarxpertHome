@@ -3,29 +3,26 @@ from .get_data_by_month import *
 
 def get_center_data(cars: list):
     # 车型
-    car_type = ['微型车', '紧凑型车', '中型车', '中大型车', '大型车',
-                '小型SUV', '紧凑型SUV', '中型SUV', '中大型SUV' ,'大型SUV',
-                '紧凑型MPV', '中型MPV', '中大型MPV' ,'大型MPV']
-    car_type_list = dict.fromkeys(car_type)
+    car_type_list = {}
+    car_type_count_list = {}
     for i in cars:
-        temp = str(i.carType)
-        if car_type_list[temp] is None:
-            car_type_list[temp] = 1
+        if car_type_list.get(i.carType, -1) == -1:
+            car_type_list[str(i.carType)] = int(i.sales)
+            car_type_count_list[str(i.carType)] = 1
         else:
-            car_type_list[temp] += 1
-    car_type_count_list = sorted(car_type_list.items(), key=lambda x: x[1], reverse=True)
-    max_car_type_count = car_type_count_list[0][1]
-    max_car_type = car_type_count_list[0][0]
+            car_type_list[str(i.carType)] += int(i.sales)
+            car_type_count_list[str(i.carType)] += 1
+    car_type_sales_list = sorted(car_type_list.items(), key=lambda x: x[1], reverse=True)
+    max_car_type_count = car_type_sales_list[0][1]
+    max_car_type = car_type_sales_list[0][0]
 
     # 当月销量最高车型
     most_popular_car = cars[0].model
     most_popular_car_sales = cars[0].sales
-    index = 0
-    for i in range(len(car_type) - 1):
-        index += car_type_list.get(car_type[i])
-        if cars[index].sales > most_popular_car_sales:
-            most_popular_car = cars[index].model
-            most_popular_car_sales = cars[index].sales
+    for i in range(len(cars)):
+        if cars[i].sales > most_popular_car_sales:
+            most_popular_car = cars[i].model
+            most_popular_car_sales = cars[i].sales
 
     # 品牌
     car_brand_count_list = {}
@@ -48,6 +45,7 @@ def get_center_data(cars: list):
             max_brand_sales += i.sales
     return most_popular_car, most_popular_car_sales, max_car_type, max_car_type_count, max_brand, max_brand_sales
 
+
 def get_roll_list(cars: list):
     car_brand_sales_list = {}
     for i in cars:
@@ -64,6 +62,7 @@ def get_roll_list(cars: list):
             'value': v
         })
     return roll_list
+
 
 def get_energe_type_rate(cars: list):
     energy_type_count_list = {}

@@ -1,8 +1,8 @@
 from .get_data_by_month import *
 
 
-def get_pie_type_data():
-    cars = get_cars_by_month()
+def get_pie_type_data(month):
+    cars = get_cars_by_month(month)
     car_type_dic = {}
     for i in cars:
         if car_type_dic.get(i.carType, -1) == -1:
