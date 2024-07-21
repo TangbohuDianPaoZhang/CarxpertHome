@@ -6,8 +6,8 @@ from wordcloud import WordCloud
 from .get_data_by_month import *
 
 
-def generate_img():
-    cars = list(get_cars_by_month())
+def generate_img(month):
+    cars = list(get_cars_by_month(month))
     car_brand = ''
     for i in cars:
         car_brand += i.brand + ' '

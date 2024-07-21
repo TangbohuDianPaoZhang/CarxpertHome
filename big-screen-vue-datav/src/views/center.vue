@@ -1,17 +1,5 @@
 <template>
   <div id="center">
-<!--    <div class="month-select">-->
-<!--      <select v-model:="selectedYearMonth" @change="fetchdata">-->
-<!--        <option-->
-<!--          v-for="item in yearMonthOption"-->
-<!--          :key="item"-->
-<!--          :value="item"-->
-<!--          :selected="item === selectedYearMonth"-->
-<!--        >-->
-<!--          {{ item }}-->
-<!--        </option>-->
-<!--      </select>-->
-<!--    </div>-->
     <div class="up">
       <div
         class="bg-color-black item"
@@ -97,29 +85,13 @@
 </template>
 
 <script>
+// import axios from "axios";
 import CenterChart from '@/components/echart/center/centerChartRate'
+import {EventBus} from "@/eventBus";
+
 export default {
   data() {
-    // const currentYear = new Date().getFullYear()
-    // const years = []
-    // for (let i = 0; i < 3; i++) {
-    //   years.push(currentYear - i)
-    // }
-    //
-    // const months = []
-    // for (let i = 1; i <= 12; i++) {
-    //   months.push(i < 10 ? `0${i}` : i)
-    // }
-    //
-    // const yearMonthOption = []
-    // years.forEach(year => {
-    //   months.forEach(month => {
-    //     yearMonthOption.push(`${year}${month}`)
-    //   })
-    // })
     return {
-      // yearMonthOption,
-      // selectedYearMonth: `${currentYear}${new Date().getMonth() + 1 < 10 ? '0' : ''}${new Date().getMonth() + 1}`,
       result:'',
       ranking: {
         data: [],
@@ -169,13 +141,25 @@ export default {
     CenterChart
   },
   async mounted() {
-    const res = await this.$http.get('/sales/center')
-    this.result = res.data
-    this.$set(this.ranking, 'data', res.data.roll_list)
-    this.$set(this.rate[0], 'tips', res.data.oil_rate)
-    this.$set(this.rate[1], 'tips', res.data.electric_rate)
-    this.$set(this.water, 'data', [res.data.hybrid_rate])
-    console.log(res)
+    EventBus.$on('monthChanged', this.fetchMonthData)
+    await this.fetchMonthData(this.$parent.selectedYearMonth);
+  },
+  beforeDestroy() {
+    EventBus.$off('monthChanged', this.fetchMonthData);
+  },
+  methods: {
+    async fetchMonthData(month) {
+      try {
+        const res = await this.$http.post('/sales/center/', { month });
+        this.result = res.data;
+        this.$set(this.ranking, 'data', res.data.roll_list);
+        this.$set(this.rate[0], 'tips', res.data.oil_rate);
+        this.$set(this.rate[1], 'tips', res.data.electric_rate);
+        this.$set(this.water, 'data', [res.data.hybrid_rate]);
+      } catch (e) {
+        console.error('error fetching month data: ', e)
+      }
+    }
   }
 }
 </script>
