@@ -14,7 +14,7 @@
       </div>
       <div class="row_list">
         <ul class="car_rank" style="width: 100%;height:420px;overflow:auto">
-          <li style="font-size: 23px">
+          <li style="font-size: 26px">
             <div>销售排名</div>
             <div>图片</div>
             <div>汽车信息</div>
@@ -51,7 +51,6 @@ export default {
   async mounted(){
     const res = await this.$http.get('sales/bottomRight/')
     this.carData = res.data.carData
-    console.log(this.data())
   }
 };
 </script>

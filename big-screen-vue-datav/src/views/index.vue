@@ -80,20 +80,18 @@
               <centerRight2 />
             </div>
             <div>
-              <dv-border-box-13>
-                <centerRight1 />
-              </dv-border-box-13>
+                <img src="../../../i8.png" alt="" style="height: 200px; width: 300px; margin-top: 50px"/>
             </div>
           </div>
 
           <!-- 第四行数据 -->
           <div class="bottom-box">
-            <dv-border-box-13>
-              <bottomLeft />
-            </dv-border-box-13>
             <dv-border-box-12>
               <bottomRight />
             </dv-border-box-12>
+            <dv-border-box-13>
+                <centerRight1 />
+            </dv-border-box-13>
           </div>
         </div>
       </div>
@@ -109,7 +107,6 @@ import centerLeft2 from './centerLeft2'
 import centerRight1 from './centerRight1'
 import centerRight2 from './centerRight2'
 import center from './center'
-import bottomLeft from './bottomLeft'
 import bottomRight from './bottomRight'
 import {EventBus} from "@/eventBus";
 
@@ -132,7 +129,6 @@ export default {
     })
     return {
       yearMonthOption,
-      // selectedYearMonth: `${currentYear}${new Date().getMonth() + 1 < 10 ? '0' : ''}${new Date().getMonth() + 1}`,
       selectedYearMonth: `${currentYear}${new Date().getMonth() < 10 ? '0' : ''}${new Date().getMonth()}`,
       timing: null,
       loading: true,
@@ -149,7 +145,7 @@ export default {
     centerRight1,
     centerRight2,
     center,
-    bottomLeft,
+
     bottomRight
   },
   mounted() {
@@ -182,4 +178,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/scss/index.scss';
+
+.bottom-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

@@ -29,13 +29,11 @@ export default {
   async mounted () {
     EventBus.$on('monthChanged', this.fetchMonthData)
     await this.fetchMonthData(this.$parent.selectedYearMonth);
-    // const res = await this.$http.get('/sales/center_left/')
-    // this.$set(this.cdata, 'seriesData', res.data.pie_data)
   },
   beforeDestroy() {
     EventBus.$off('monthChanged', this.fetchMonthData);
   },
-  updated() {
+  async updated() {
     this.initChart()
     this.loopAnimation()
   },

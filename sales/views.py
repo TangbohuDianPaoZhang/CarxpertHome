@@ -56,7 +56,6 @@ def center_right2(request):
     if request.method == "GET":
         get_center_right2.getPriceSortData()
         realData = get_center_right2.getPriceSortData()
-        # print(realData)
         return JsonResponse({
             'realData':realData
         })
@@ -76,7 +75,6 @@ def centerRightChange(request,energyType):
 
 def bottomRight(request):
     if request.method == "GET":
-        # car_rank.getRankData()
         carData = car_rank.getRankData()
         return JsonResponse({
             'carData':carData
